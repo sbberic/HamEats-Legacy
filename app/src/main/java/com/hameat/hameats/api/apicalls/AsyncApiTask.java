@@ -20,6 +20,7 @@ public class AsyncApiTask extends AsyncTask<String, Void, Object>{
     @Override
     protected Object doInBackground(String... params) {
         StringBuilder stringBuilder = new StringBuilder();
+        Pair kv = null;
         for(String s : params) {
             stringBuilder.append(s);
         }
@@ -28,13 +29,12 @@ public class AsyncApiTask extends AsyncTask<String, Void, Object>{
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.connect();
             String contentType = conn.getContentType();
-            Pair kv = new Pair(contentType, conn.getContent());
-            return kv;
+            kv = new Pair(contentType, conn.getContent());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return kv;
     }
 }

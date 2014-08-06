@@ -40,7 +40,7 @@ public class PhotoViewFragment extends Fragment implements OnApiResponseListener
         super.onCreate(savedInstanceState);
         mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_REFRESH_TIME,
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
                 LOCATION_REFRESH_DISTANCE, this);
         Location loc = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if(loc != null) {
@@ -56,8 +56,9 @@ public class PhotoViewFragment extends Fragment implements OnApiResponseListener
         String key = "key=" + this.getString(R.string.google_api_key);
         String location = "&location=" + curLat +"," + curLong;
         String radius = "&radius=500";
-        String[] params = {base, key, location, radius};
-        new NearbyPlacesSearchTask().execute(params);
+        String types = "&types=restaurant|cafe";
+        String[] params = {base, key, location, radius, types};
+        new NearbyPlacesSearchTask(this.getActivity()).execute(params);
     }
 
     @Override
