@@ -17,6 +17,8 @@ import com.hameat.hameats.R;
 import com.hameat.hameats.api.apicalls.NearbyPlacesSearchTask;
 import com.hameat.hameats.api.apicalls.OnApiResponseListener;
 
+import java.util.ArrayList;
+
 /**
  * Created by sbberic on 7/31/2014.
  */
@@ -58,11 +60,13 @@ public class PhotoViewFragment extends Fragment implements OnApiResponseListener
         String radius = "&radius=500";
         String types = "&types=restaurant|cafe";
         String[] params = {base, key, location, radius, types};
-        new NearbyPlacesSearchTask(this.getActivity()).execute(params);
+        new NearbyPlacesSearchTask(this.getActivity(), this).execute(params);
     }
 
     @Override
-    public void processResults() {
+    public void processResults(Object o) {
+        ArrayList<String> photoRefs = (ArrayList<String>) o;
+
 
     }
 
@@ -72,7 +76,6 @@ public class PhotoViewFragment extends Fragment implements OnApiResponseListener
             curLat = location.getLatitude();
             curLong = location.getLongitude();
             doSearch();
-
         }
     }
 

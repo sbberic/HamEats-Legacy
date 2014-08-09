@@ -22,9 +22,11 @@ import java.util.ArrayList;
 public class NearbyPlacesSearchTask extends AsyncApiTask {
 
     private Context context;
+    private OnApiResponseListener listener;
 
-    public NearbyPlacesSearchTask(Context context) {
+    public NearbyPlacesSearchTask(Context context, OnApiResponseListener listener) {
         this.context = context;
+        this.listener = listener;
     }
     @Override
     public Object doInBackground(String... params) {
@@ -47,7 +49,12 @@ public class NearbyPlacesSearchTask extends AsyncApiTask {
                 JSONArray photos = (JSONArray) place.get("photos");
                 JSONObject photo = (JSONObject) photos.get(0);
                 String photoRef = (String) photo.get("photo_reference");;
-                photoRefs.add(i, photoRef);
+                String base = context.getString(R.string.places_photo_api_base);
+                String key = "key=" + context.getString(R.string.google_api_key);
+                String photoReference = "&photoreference=" + photoRef;
+                String maxWidth = "&maxwidth=400";
+                String url = base + key + photoReference + maxWidth;
+                photoRefs.add(i, url);
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -61,14 +68,6 @@ public class NearbyPlacesSearchTask extends AsyncApiTask {
 
     @Override
     public void onPostExecute(Object result) {
-        ArrayList<String> photoRefs = (ArrayList<String>) result;
-        for(String photoRef : photoRefs) {
-            String base = context.getString(R.string.places_photo_api_base);
-            String key = "key=" + context.getString(R.string.google_api_key);
-            String photoReference = "&photoreference=" + photoRef;
-            String maxWidth = "&maxwidth=400";
-            String url = base + key + photoReference + maxWidth;
-
-        }
+        listener.processResults(result);
     }
 }
