@@ -30,6 +30,7 @@ public class PhotoViewFragment extends Fragment implements OnApiResponseListener
 
     private double curLat, curLong;
     private LocationManager mLocationManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

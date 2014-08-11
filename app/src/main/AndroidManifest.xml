@@ -14,11 +14,17 @@
         <activity
             android:name=".CompareFoodActivity"
             android:label="@string/app_name" >
+
+        </activity>
+        <activity android:name=".TenderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".StoreActivity">
+
         </activity>
     </application>
 
